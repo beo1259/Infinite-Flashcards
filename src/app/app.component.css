@@ -91,7 +91,7 @@
   max-height: 7em;
 
   gap: 20px;
-  padding: 2%;
+  padding-top: 1%;
 }
 
 .flashcard {
@@ -104,10 +104,10 @@
   display: flex;
   border: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-  min-width: 40em;
-  max-width: 40em;
-  min-height: 20em;
-  max-height: 20em;
+  min-width: 50vw;
+  max-width: 50vw;
+  min-height: 20vw;
+  max-height: 20vw;
   margin: 10px;
   padding: 15px;
   border-radius: 8px;
@@ -186,6 +186,7 @@
   color: grey
 }
 
+
 .deck-name-input {
   margin-top: 3%;
   font-family: sfpro;
@@ -200,7 +201,8 @@
 }
 
 .deck-management-buttons{
-  margin-top: 0;
+  margin-left: 23vw;
+  justify-content: right;
 }
 
 .deck-name:focus{
