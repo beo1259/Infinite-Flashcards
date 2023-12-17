@@ -1,0 +1,278 @@
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: white;
+  font-size: 3em;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.3%;
+}
+
+.question-input {
+  font-family: sfpro;
+  font-size: 1.3em;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  width: 70%;
+  color: black;
+  background-color: rgb(235, 235, 235);
+  padding: 1%;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-left: 14%;
+}
+
+.generate-button {
+  font-family: sfpro;
+  font-size: 1.1em;
+  height: 2em;
+  width: 10em;
+  margin-top: 1%;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  background-color: cornflowerblue;
+  transition: all 0.4s;
+}
+
+.generate-button:hover {
+  background-color: gold;
+  color: black;
+  cursor: pointer;
+}
+
+.save-button {
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: rgb(0, 210, 0);
+  color: white;
+  transition: all 0.4s;
+}
+
+.save-container{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  margin-right: 14%;
+  margin-top: -3.5%;
+}
+
+.save-button:hover {
+  background-color: gold;
+  color: black;
+  cursor: pointer;
+}
+
+.flashcards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 7em;
+  max-height: 7em;
+  gap: 20px;
+  padding: 20px;
+}
+
+.flashcard {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-family: sfpro;
+  font-size: 1.4em;
+  display: flex;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  min-width: 20em;
+  max-width: 20em;
+  min-height: 12em;
+  max-height: 12em;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: rgb(235, 235, 235);
+  transition: all 0.2s ease;
+}
+
+.flashcard:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.flashcard-visible {
+  display: flex;
+  border: none;
+  box-shadow: none;
+}
+
+.flashcard-hidden {
+  display: none;
+  border: none;
+  box-shadow: none;
+}
+
+.switch-button {
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: cornflowerblue;
+  color: white;
+  transition: all 0.4s;
+}
+
+.switch-button:hover {
+  background-color: gold;
+  color: black;
+  cursor: pointer;
+}
+
+.flip-button {
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: crimson;
+  color: white;
+  transition: all 0.4s;
+}
+
+.flip-button:hover {
+  background-color: gold;
+  color: black;
+  cursor: pointer;
+}
+
+
+.select-deck{
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: rgb(235, 235, 235);
+  color: grey
+}
+
+.deck-name-input {
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6.2em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: rgb(235, 235, 235);
+  color: grey
+}
+
+.deck-management-buttons{
+  margin-top: 11%;
+}
+
+.deck-name:focus{
+  outline: none;
+}
+
+.load-button{
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: rgb(0, 210, 0);
+  color: white;
+  transition: all 0.4s;
+}
+
+.load-button:hover {
+  background-color: gold;
+  color: black;
+  cursor: pointer;
+}
+
+.delete-button{
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 0.9em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: red;
+  color: white;
+  transition: all 0.4s;
+}
+
+.delete-button:hover {
+
+  cursor: pointer;
+}
+
+
+.loading-message {
+  text-align: center;
+  font-size: 1.5em;
+  color: #555;
+}
+
+.spinner-container {
+  margin-top: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.spinner {
+  border: 4px solid rgba(0,0,0,0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
