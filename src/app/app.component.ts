@@ -90,6 +90,8 @@ export class AppComponent implements OnInit {
   apiKey = environment.apiKey;
 
   userAnswer = '';
+  selectedCardQuantity = 10;
+  cardQuantities = [10, 25, 50, 100, 250, 500];
   flashcards: Array<{ front: string; back: string, flipped: boolean }> = [];
   currentIndex = 0;
 
@@ -114,7 +116,7 @@ export class AppComponent implements OnInit {
 
     const messages = [
       {
-        role: "system", content: `You will generate AT LEAST 100 FLASHCARDS from the given user input, there can be 
+        role: "system", content: `You will generate AT LEAST ${this.selectedCardQuantity} FLASHCARDS from the given user input, there can be 
         no repetition among the flashcards that you generate. * **IMPORTANT: THERE IS NO NEWLINE BETWEEN FRONT AND BACK! THE END OF FRONT IS ONLY SEPERATED FROM BACK BY A SPACE**
         IT MUST BE IN THE FOLLOWING FORMAT, STARTING AFTER THE COLON, WHITESPACES INCLUDED*:
         Front: YOURANSWERHERE Back: YOURANSWERHERE The front should be the question and the back should be the answer.`},
@@ -177,3 +179,4 @@ export class AppComponent implements OnInit {
 
   }
 }
+

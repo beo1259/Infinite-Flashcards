@@ -31,8 +31,9 @@
 .button-container {
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: space-between;
   margin-left: 14%;
+  width: 70%;
 }
 
 .generate-button {
@@ -88,8 +89,9 @@
   align-items: center;
   min-height: 7em;
   max-height: 7em;
+
   gap: 20px;
-  padding: 20px;
+  padding: 2%;
 }
 
 .flashcard {
@@ -102,10 +104,10 @@
   display: flex;
   border: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-  min-width: 20em;
-  max-width: 20em;
-  min-height: 12em;
-  max-height: 12em;
+  min-width: 40em;
+  max-width: 40em;
+  min-height: 20em;
+  max-height: 20em;
   margin: 10px;
   padding: 15px;
   border-radius: 8px;
@@ -189,7 +191,7 @@
   font-family: sfpro;
   font-size: 0.9em;
   height: 2em;
-  width: 6.2em;
+  width: 6.5em;
   border: none;
   margin-left: 10px;
   border-radius: 4px;
@@ -198,7 +200,7 @@
 }
 
 .deck-management-buttons{
-  margin-top: 11%;
+  margin-top: 0;
 }
 
 .deck-name:focus{
@@ -275,4 +277,27 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.card-quantity-selector {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+ 
+}
+
+.card-quantity-selector label {
+
+  color: white;
+}
+
+.card-quantity-selector select {
+  margin-left: 1em;
+
+  display: flex;
+  justify-content: right;
+  padding: 5px;
+  border-radius: 4px;
+  font-family: sfpro;
+  font-size: 0.9em;
 }

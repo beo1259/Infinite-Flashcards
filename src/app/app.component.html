@@ -11,6 +11,12 @@
 
     <div class="button-container">
       <button class="generate-button" (click)="submitAnswer()">Generate Cards</button>
+      <div class="card-quantity-selector">
+        <label for="cardQuantity">Number of Cards:</label>
+        <select id="cardQuantity" [(ngModel)]="selectedCardQuantity">
+          <option *ngFor="let quantity of cardQuantities" [value]="quantity">{{ quantity }}</option>
+        </select>
+      </div>
       
     </div>
 
