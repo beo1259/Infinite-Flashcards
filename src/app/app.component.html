@@ -1,5 +1,27 @@
 <main class="main">
+  
+  <div class="modal-overlay" [class.active]="isModalOpen" (click)="closeModal()">
+    <div class="modal" [class.active]="showSaveModal">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="toggleSaveModal()">&times;</span>
+        <input class="deck-name-input" type="text" [(ngModel)]="newDeckName" spellcheck="false" placeholder="Deck name..." />
+        <button class="save-button" (click)="saveNewDeck(newDeckName); toggleSaveModal()">Save</button>
+      </div>
+    </div>
+  
+    <div class="modal" [class.active]="showLoadModal">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="toggleLoadModal()">&times;</span>
+        <select class="select-deck" [(ngModel)]="selectedDeckName">
+          <option *ngFor="let deck of decks" [value]="deck.name">{{ deck.name }}</option>
+        </select>
+        <button class="save-button" (click)="loadSelectedDeck(); toggleLoadModal()">Load</button>
+      </div>
+    </div>
+  </div>
+  
   <div class="body">
+    
     <div class="title-container">
       <h1 class="title"><span style="color: gold">FOREVER</span> FLASHCARDS</h1>
     </div>
@@ -14,7 +36,7 @@
       <div class="card-quantity-selector">
         <label for="cardQuantity">Number of Cards:</label>
         <select id="cardQuantity" [(ngModel)]="selectedCardQuantity">
-          <option *ngFor="let quantity of cardQuantities" [value]="quantity">{{ quantity }}</option>
+          <option *ngFor="let quantity of cardQuantities" [value]="quantity">~ {{ quantity }}</option>
         </select>
       </div>
       
@@ -25,32 +47,50 @@
   <div *ngIf="isLoading" class="spinner-container">
     <div class="spinner"></div>
   </div>
-  <div class="flashcards-container">
-    <div class="deck-management-buttons">
-      <input class="deck-name-input" type="text" [(ngModel)]="newDeckName" placeholder="Deck name..." />
-      <button class="save-button" (click)="saveNewDeck(newDeckName)">Save</button>
+  <div *ngIf="!isLoading" >
+    <div *ngIf="flashcards && flashcards.length > 0" class="deck-management-buttons">
+      <button class="load-button" (click)="selectedDeckName ? saveNewDeck() : toggleSaveModal()">Save</button>
       
-      <select class="select-deck" [(ngModel)]="selectedDeckName">
-        <option *ngFor="let deck of decks" [value]="deck.name">{{ deck.name }}</option>
-      </select>
-      <button class="load-button" (click)="loadSelectedDeck()">Load</button>
+      
+      <button class="load-button" (click)="toggleLoadModal()">Load</button>
   
       <button class="delete-button" (click)="deleteSelectedDeck()">Delete</button>
+
   
     </div>
-    <div *ngIf="flashcards && flashcards.length > 0">
+    
+    <div *ngIf="flashcards && flashcards.length > 0" class="main-container">
       <div (click)="toggleFlashcard(flashcards[currentIndex])" class="flashcard">
-        <p [ngClass]="flashcards[currentIndex].flipped ? 'flashcard-hidden' : 'flashcard-visible'">{{
-          flashcards[currentIndex].front }}</p>
-        <p [ngClass]="flashcards[currentIndex].flipped ? 'flashcard-visible' : 'flashcard-hidden'">{{
-          flashcards[currentIndex].back }}</p>
+        <button class="edit-button top-left" (click)="editCurrentCard()">Edit</button>
+
+        <div *ngIf="!isEditCurrentCard" class="flashcard-view">
+          <p [ngClass]="flashcards[currentIndex].flipped ? 'flashcard-hidden' : 'flashcard-visible'">
+            {{ flashcards[currentIndex].front }}
+          </p>
+          <p [ngClass]="flashcards[currentIndex].flipped ? 'flashcard-visible' : 'flashcard-hidden'">
+            {{ flashcards[currentIndex].back }}
+          </p>
+        </div>
+        <div *ngIf="isEditCurrentCard" class="flashcard-edit">
+          <div class="input-group">
+            <textarea  class="text-areas"  [(ngModel)]="flashcards[currentIndex].front" id="front"></textarea>
+          </div>
+          <div class="input-group">
+            <textarea class="text-areas" [(ngModel)]="flashcards[currentIndex].back" id="back"></textarea>
+          </div>
+          <div class="button-group">
+          <button class="save-button2" (click)="saveCurrentCardEdit()">Save</button>
+          <button class="delete-button2" (click)="cancelCurrentCardEdit()">Cancel</button>
+        </div>
+        </div>
       </div>
 
       <div class="navigation-buttons">
-        <button class="switch-button" (click)="prevFlashcard()">Back</button>
-        <button class="switch-button" (click)="nextFlashcard()">Next</button>
-        <button class="flip-button" (click)="toggleFlashcard(flashcards[currentIndex])">Flip</button>
+        <button class="switch-button2" (click)="prevFlashcard()">➜</button>
+        <p class="current-index">{{ currentIndex + 1 }} / {{ flashcards.length }}</p>
+        <button class="switch-button" (click)="nextFlashcard()">➜</button>
       </div>
+
       
       
   </div>

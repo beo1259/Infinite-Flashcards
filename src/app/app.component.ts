@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { FormBuilder, FormsModule } from '@angular/forms';
@@ -20,18 +20,98 @@ export class AppComponent implements OnInit {
   newDeckName: string = '';
   decks: Array<{ name: string, flashcards: Array<{ front: string; back: string, flipped: boolean }> }> = [];
   selectedDeckName: string = '';
+  editingCardIndex: number | null = null;
+  isEditCurrentCard: boolean = false;
+
+  showSaveModal = false;
+  showLoadModal = false;
+  modalVisible = false;
+
+  toggleSaveModal() {
+    this.showSaveModal = !this.showSaveModal;
+    if (!this.selectedDeckName) {
+      this.showSaveModal = true;
+    }
+    if (this.showLoadModal) {
+      this.showLoadModal = false;
+    }
+    this.isModalOpen = this.showSaveModal || this.showLoadModal;
+  }
+
+  toggleLoadModal() {
+    this.showLoadModal = !this.showLoadModal;
+    if (this.showSaveModal) {
+      this.showSaveModal = false;
+    }
+    this.isModalOpen = this.showSaveModal || this.showLoadModal;
+  }
+
+  openModal(type: 'save' | 'load') {
+    if (type === 'save') {
+      this.showSaveModal = true;
+    } else if (type === 'load') {
+      this.showLoadModal = true;
+    }
+    setTimeout(() => {
+      this.isModalOpen = true;
+    }, 0);
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+
+    setTimeout(() => {
+      this.showSaveModal = false;
+      this.showLoadModal = false;
+    }, 100);
+  }
 
   ngOnInit() {
     const storedFlashcards = localStorage.getItem('flashcards');
     if (storedFlashcards) {
       this.flashcards = JSON.parse(storedFlashcards);
     }
+    this.decks.unshift({ name: 'Unsaved Deck', flashcards: [] });
+
     this.loadDecksFromLocalStorage();
     // load the first deck by default 
     if (this.decks.length > 0) {
       this.flashcards = this.decks[0].flashcards;
       this.selectedDeckName = this.decks[0].name;
     }
+  }
+
+  isModalOpen: boolean = false;
+
+  startEditing(index: number): void {
+    this.editingCardIndex = index;
+  }
+
+  editCurrentCard(): void {
+    this.isEditCurrentCard = true;
+  }
+
+  saveCurrentCardEdit(): void {
+    localStorage.setItem('flashcards', JSON.stringify(this.flashcards));
+    this.isEditCurrentCard = false;
+  }
+
+  cancelCurrentCardEdit(): void {
+    this.isEditCurrentCard = false;
+  }
+
+
+  saveChanges(): void {
+    localStorage.setItem('flashcards', JSON.stringify(this.flashcards));
+    this.editingCardIndex = null;
+  }
+
+  cancelEditing(): void {
+    this.editingCardIndex = null;
+  }
+
+  toggleModal() {
+    this.isModalOpen = !this.isModalOpen;
   }
 
   loadDecksFromLocalStorage() {
@@ -65,10 +145,14 @@ export class AppComponent implements OnInit {
 
   loadSelectedDeck() {
     const selectedDeck = this.decks.find(deck => deck.name === this.selectedDeckName);
+    if (this.selectedDeckName === 'Unsaved Deck') {
+      this.flashcards = [];
+      this.currentIndex = 0;
+    }
     if (selectedDeck) {
       this.flashcards = selectedDeck.flashcards;
       this.currentIndex = 0;
-      this.toggleFlashcard(false);
+      this.flashcards[this.currentIndex].flipped = false;
     }
   }
 
@@ -76,16 +160,28 @@ export class AppComponent implements OnInit {
     flashcard.flipped = !flashcard.flipped;
   }
 
-  saveNewDeck(name: string) {
+  saveNewDeck(name?: string) {
     if (name) {
-      this.decks.push({ name: name, flashcards: this.flashcards });
+      const existingDeckIndex = this.decks.findIndex(deck => deck.name === name);
+  
+      if (existingDeckIndex !== -1) {
+        this.decks[existingDeckIndex].flashcards = this.flashcards;
+        alert('Deck updated successfully.');
+      } else {
+        this.decks.push({ name: name, flashcards: this.flashcards });
+        this.selectedDeckName = name; 
+        alert('New deck saved successfully.');
+      }
+  
       localStorage.setItem('decks', JSON.stringify(this.decks));
-      this.newDeckName = '';
-      console.log('New deck saved to localStorage');
+      this.newDeckName = ''; 
+      this.closeModal(); 
     } else {
-      console.log('Please enter a name for the deck.');
+      this.toggleSaveModal();
     }
   }
+  
+  
 
   apiKey = environment.apiKey;
 
@@ -98,13 +194,28 @@ export class AppComponent implements OnInit {
   nextFlashcard() {
     if (this.currentIndex < this.flashcards.length - 1) {
       this.currentIndex++;
-      this.toggleFlashcard(false);
+      this.flashcards[this.currentIndex].flipped = false;
     }
   }
 
   prevFlashcard() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
+      this.flashcards[this.currentIndex].flipped = false;
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      this.nextFlashcard();
+    } else if (event.key === 'ArrowLeft') {
+      this.prevFlashcard();
+    }
+    if (event.key === 'Enter') {
+      this.flashcards[this.currentIndex].flipped = !this.flashcards[this.currentIndex].flipped;
+
+
     }
   }
 
@@ -176,7 +287,7 @@ export class AppComponent implements OnInit {
     }
     this.isLoading = false;
     localStorage.setItem('flashcards', JSON.stringify(this.flashcards));
+    this.selectedDeckName = 'Unsaved Deck';
 
   }
 }
-
