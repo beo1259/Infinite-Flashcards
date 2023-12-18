@@ -27,8 +27,10 @@
     </div>
 
     <div class="input-container">
-      <input class="question-input" spellcheck="false" placeholder="Enter a topic..." type="text"
-        [(ngModel)]="userAnswer">
+      <input class="question-input" spellcheck="false" placeholder="Enter a topic..." type="text"[(ngModel)]="userAnswer">
+      <button class="mic-icon" (click)="toggleSpeechRecognition()">🎤</button>
+      <span *ngIf="isRecording" class="recording-indicator">🔴</span>
+
     </div>
 
     <div class="button-container">
@@ -56,13 +58,15 @@
   
       <button class="delete-button" (click)="deleteSelectedDeck()">Delete</button>
 
+      <button class="study-button" (click)="toggleStudy()">Study</button>
   
     </div>
     
     <div *ngIf="flashcards && flashcards.length > 0" class="main-container">
-      <div (click)="toggleFlashcard(flashcards[currentIndex])" class="flashcard">
-        <button class="edit-button top-left" (click)="editCurrentCard()">Edit</button>
-
+      <div *ngIf="studyMode" class="overlay"></div>
+      <div (click)="toggleFlashcard(flashcards[currentIndex])" [ngClass]="studyMode ? 'flashcard-study' : 'flashcard'" >
+        <button class="edit-button" (click)="editCurrentCard()">Edit</button>
+        <button class="exit-study" (click)="exitStudyMode($event)">X</button>
         <div *ngIf="!isEditCurrentCard" class="flashcard-view">
           <p [ngClass]="flashcards[currentIndex].flipped ? 'flashcard-hidden' : 'flashcard-visible'">
             {{ flashcards[currentIndex].front }}

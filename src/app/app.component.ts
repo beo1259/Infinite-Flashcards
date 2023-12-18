@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import axios from 'axios';
 import { environment } from '../environments/environment';
+declare var webkitSpeechRecognition: any;
 
 
 @Component({
@@ -15,6 +16,7 @@ import { environment } from '../environments/environment';
 })
 
 export class AppComponent implements OnInit {
+  speechRecognition: any;
   title = 'infiniteflashcards';
   isLoading = false;
   newDeckName: string = '';
@@ -22,10 +24,20 @@ export class AppComponent implements OnInit {
   selectedDeckName: string = '';
   editingCardIndex: number | null = null;
   isEditCurrentCard: boolean = false;
+  isRecording = false;
 
   showSaveModal = false;
   showLoadModal = false;
   modalVisible = false;
+
+  studyMode = false;
+
+  toggleStudy(){
+    this.studyMode = !this.studyMode;
+  
+  }
+
+
 
   toggleSaveModal() {
     this.showSaveModal = !this.showSaveModal;
@@ -57,6 +69,11 @@ export class AppComponent implements OnInit {
     }, 0);
   }
 
+  exitStudyMode(event: Event): void {
+    event.stopPropagation(); 
+    this.toggleStudy();
+  }
+
   closeModal() {
     this.isModalOpen = false;
 
@@ -78,6 +95,30 @@ export class AppComponent implements OnInit {
     if (this.decks.length > 0) {
       this.flashcards = this.decks[0].flashcards;
       this.selectedDeckName = this.decks[0].name;
+    }
+
+    if ('webkitSpeechRecognition' in window) {
+      this.speechRecognition = new webkitSpeechRecognition();
+      this.speechRecognition.continuous = false;
+      this.speechRecognition.interimResults = false;
+      this.speechRecognition.lang = 'en-US';
+      this.speechRecognition.onresult = (event: any) => {
+        this.userAnswer = event.results[0][0].transcript;
+      };
+    }
+  }
+
+  toggleSpeechRecognition() {
+    if (this.speechRecognition) {
+      if (!this.isRecording) {
+        this.speechRecognition.start();
+        this.isRecording = true; 
+      } else {
+        this.speechRecognition.stop();
+        this.isRecording = false; 
+      }
+    } else {
+      console.error('Speech recognition not supported in this browser.');
     }
   }
 

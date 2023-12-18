@@ -16,22 +16,51 @@
 }
 
 .input-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
 }
 
 .question-input {
+  flex: 1;
   font-family: sfpro;
   font-size: 1.3em;
   border-radius: 10px;
   border: none;
   outline: none;
-  width: 120%;
+  width: 100%;
   color: black;
   background-color: rgb(235, 235, 235);
   padding: 1%;
 }
+
+
+.mic-icon{
+  top: 0.2vw;
+  position: absolute;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  font-size: 1.3em;
+}
+
+.recording-indicator{
+  margin-left: 0.5vw;
+  bottom: 0.5vw;
+  position: absolute;
+  font-family: sfpro;
+  color: red;
+  margin-top: 5%;
+  animation: fadeInOut 2s infinite ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.mic-icon:hover{
+  cursor: pointer;
+}
+
 
 .button-container {
   display: flex;
@@ -63,8 +92,8 @@
 .save-button {
   font-family: sfpro;
   font-size: 0.9em;
-  height: 2em;
   width: 6em;
+  padding-top: 3%;
   border: none;
   border-radius: 4px;
   background-color: transparent;
@@ -94,12 +123,28 @@
   background-color: rgb(235, 235, 235);
   transition: all 0.4s ease;
   overflow: hidden;
+  position: relative;
 }
 
-.flashcard:hover {
-  cursor: pointer;
-  transform: scale(140%) translateY(-2.5em);
-
+.flashcard-study {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-family: sfpro;
+  font-size: 1.2em;
+  display: flex;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  width: 27em;
+  min-height: 15em;
+  max-height: 15em;
+  border-radius: 8px;
+  padding: 10%;
+  background-color: rgb(235, 235, 235);
+  transition: all 0.4s ease;
+  overflow: hidden;
+  transform: scale(150%) translateY(-2.5em);
+  z-index: 5;
 }
 
 .flashcard-visible {
@@ -116,11 +161,14 @@
 }
 
 .switch-button {
+  position: relative;
   margin-top: -3%;
   font-family: sfpro;
   font-size: 3em;
   border: none;
-  width: 6em;
+  min-width: 6em;
+  z-index: 5;
+  max-width: 6em;
   border-radius: 4px;
   background-color: transparent;
   color: cornflowerblue;
@@ -139,6 +187,7 @@
   font-size: 3em;
   border: none;
   width: 6em;
+  z-index: 5;
   border-radius: 4px;
   background-color: transparent;
   color: cornflowerblue;
@@ -185,6 +234,11 @@
   color: grey
 }
 
+.select-deck:focus{
+  border: none;
+  outline: none;
+}
+
 .navigation-buttons {
   width: 100%;
   justify-content: center;
@@ -195,19 +249,25 @@
   margin-top: 3%;
   font-family: sfpro;
   font-size: 0.9em;
-  height: 40%;
+  height: 60%;
   width: 90%;
+  padding: 3%;
   border: none;
   border-radius: 4px;
   background-color: rgb(235, 235, 235);
   color: grey
 }
 
+.deck-name-input:focus{
+  outline: none;
+  border: none;
+}
+
 .deck-management-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -3vw;
+  margin-top: -1vw;
   margin-bottom: 4vw;
 }
 
@@ -218,7 +278,7 @@
 .load-button {
   margin-top: 3%;
   font-family: sfpro;
-  font-size: 0.9em;
+  font-size: 1.2em;
   height: 2em;
   width: 6em;
   border: none;
@@ -229,12 +289,56 @@
   transition: all 0.4s;
 }
 
+.study-button {
+  margin-top: 3%;
+  font-family: sfpro;
+  font-size: 1.2em;
+  height: 2em;
+  width: 6em;
+  border: none;
+  margin-left: 10px;
+  border-radius: 4px;
+  background-color: transparent;
+  color: white;
+  transition: all 0.4s;
+}
+
+.study-button:hover {
+  color: gold;
+
+  cursor: pointer;
+}
+
 .main-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+}
+
+
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.85); 
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1; 
+  animation: fadeIn 0.5s ease-in-out;
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .load-button:hover {
@@ -246,9 +350,9 @@
 .delete-button {
   margin-top: 3%;
   font-family: sfpro;
-  font-size: 0.9em;
+  font-size: 1.2em;
   height: 2em;
-  width: 9em;
+  width: 6em;
   border: none;
   margin-left: 10px;
   border-radius: 4px;
@@ -410,23 +514,59 @@
   transition: all 0.2s ease;
   align-self: flex-start;
   opacity: 0;
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
+
+.exit-study {
+  position: absolute;
+  top: 6%;
+  left: 93%;
+  background-color: transparent;
+  border: none;
+  font-family: sfpro;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.exit-study:hover{
+  cursor: pointer;
+  color: cornflowerblue;
+}
+
 
 .flashcard:hover .edit-button {
   opacity: 1;
 }
 
+.flashcard-study:hover .edit-button {
+  opacity: 1;
+}
+
+.flashcard:hover .exit-study {
+  opacity: 0;
+}
+
+.flashcard-study:hover .exit-study {
+  opacity: 1;
+}
+
+
+.exit{
+  z-index: 10;
+}
 
 .edit-button:hover {
   cursor: pointer;
-  transform: scale(1.2);
+  color: cornflowerblue;
 }
 
 .current-index {
   margin-top: 2.5%;
   color: white;
   font-family: sfpro;
+  z-index: 5;
 }
 
 .modal {
@@ -445,12 +585,16 @@
 
 .modal-content {
   background: #fff;
+  width: 20%;
+  height: 10%;
   padding: 20px;
   border-radius: 5px;
   position: relative;
   z-index: 20;
   animation-name: animatetop;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes animatetop {
