@@ -14,7 +14,7 @@
 body{
     background-color: rgb(40, 45, 69);
     font-family: sfpro;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     width: 100%;
     height: 100%;

@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 declare var webkitSpeechRecognition: any;
 
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -197,6 +198,23 @@ export class AppComponent implements OnInit {
     }
   }
 
+  deleteCurrentCard(): void {
+    const isConfirmed = confirm(`Are you sure you want to delete this card?`);
+    if(isConfirmed){
+      if (this.flashcards && this.flashcards.length > 0 && this.currentIndex != null) {
+
+        this.flashcards.splice(this.currentIndex, 1);
+  
+        if (this.currentIndex >= this.flashcards.length) {
+          this.currentIndex = this.flashcards.length - 1;
+        } 
+
+        localStorage.setItem('flashcards', JSON.stringify(this.flashcards));
+      }
+    }
+    
+  }
+
   toggleFlashcard(flashcard: any) {
     flashcard.flipped = !flashcard.flipped;
   }
@@ -257,6 +275,15 @@ export class AppComponent implements OnInit {
       this.flashcards[this.currentIndex].flipped = !this.flashcards[this.currentIndex].flipped;
 
 
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file: File = input.files[0];
+
+      console.log('Uploaded file:', file.name);
     }
   }
 

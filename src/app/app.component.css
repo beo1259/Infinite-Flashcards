@@ -40,6 +40,11 @@
   background-color: transparent;
   border: none;
   font-size: 1.3em;
+  transition: all 0.2s
+}
+
+.mic-icon:hover{
+  filter: hue-rotate(80deg) saturate(300%);
 }
 
 .recording-indicator{
@@ -147,7 +152,7 @@
   z-index: 5;
 }
 
-.flashcard-visible {
+.flashcard-visible{
   display: flex;
   border: none;
   box-shadow: none;
@@ -305,7 +310,6 @@
 
 .study-button:hover {
   color: gold;
-
   cursor: pointer;
 }
 
@@ -317,8 +321,6 @@
   justify-content: flex-start;
 
 }
-
-
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.85); 
@@ -465,6 +467,7 @@
   max-width: 24em;
   min-width: 24em;
   padding: 2%;
+  border: 1px solid cornflowerblue;
 }
 
 .save-button2 {
@@ -529,6 +532,8 @@
   opacity: 0;
   transition: all 0.2s;
 }
+
+
 
 .exit-study:hover{
   cursor: pointer;
@@ -626,7 +631,7 @@
 }
 
 .modal-content input {
-  height: 20%;
+  height: 2.5em;
   color: black;
 }
 

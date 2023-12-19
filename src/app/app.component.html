@@ -29,6 +29,7 @@
     <div class="input-container">
       <input class="question-input" spellcheck="false" placeholder="Enter a topic..." type="text"[(ngModel)]="userAnswer">
       <button class="mic-icon" (click)="toggleSpeechRecognition()">🎤</button>
+      
       <span *ngIf="isRecording" class="recording-indicator">🔴</span>
 
     </div>
@@ -83,7 +84,10 @@
             <textarea class="text-areas" [(ngModel)]="flashcards[currentIndex].back" id="back"></textarea>
           </div>
           <div class="button-group">
+
           <button class="save-button2" (click)="saveCurrentCardEdit()">Save</button>
+          <button class="delete-button2" (click)="deleteCurrentCard()">Delete card</button>
+
           <button class="delete-button2" (click)="cancelCurrentCardEdit()">Cancel</button>
         </div>
         </div>
